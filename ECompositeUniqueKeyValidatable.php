@@ -74,9 +74,9 @@ class ECompositeUniqueKeyValidatable extends CActiveRecordBehavior {
             $criteria = new CDbCriteria();
             foreach ($uk['attributes'] as $attr) {
                 if ($object->$attr === null) {
-                    $criteria->addCondition($attr . ' is null');
+                    $criteria->addCondition("`$attr`" . ' is null');
                 } else {
-                    $criteria->compare($attr, $object->$attr);
+                    $criteria->compare("`$attr`", $object->$attr);
                 }
             }
 
