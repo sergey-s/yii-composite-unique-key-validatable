@@ -22,7 +22,7 @@ public function behaviors() {
             'class' => 'ECompositeUniqueKeyValidatable',
             'uniqueKeys' => array(
                 'attributes' => 'login, applicationId',
-                'errorMessage' => 'Your login is already taken'
+                'errorMessage' => 'Login {value} is already taken'
             )
         ),
     );
