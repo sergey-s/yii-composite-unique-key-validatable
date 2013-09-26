@@ -74,9 +74,9 @@ class ECompositeUniqueKeyValidatable extends CActiveRecordBehavior {
             $criteria = new CDbCriteria();
             foreach ($uk['attributes'] as $attr) {
                 if ($object->$attr === null) {
-                    $criteria->addCondition("`$attr`" . ' is null');
+                    $criteria->addCondition(Yii::app()->db->quoteColumnName($attr) . ' is null');
                 } else {
-                    $criteria->compare("`$attr`", $object->$attr);
+                    $criteria->compare(Yii::app()->db->quoteColumnName($attr), $object->$attr);
                 }
             }
 
@@ -93,7 +93,7 @@ class ECompositeUniqueKeyValidatable extends CActiveRecordBehavior {
 
             if (CActiveRecord::model(get_class($object))->count($criteria) > $criteriaLimit) {
                 foreach ($uk['errorAttributes'] as $attr) {
-                    $object->addError($attr, $uk['errorMessage']);
+                    $object->addError($attr, strtr($uk['errorMessage'], array('{value}'=>$object->$attr)));
                 }
             }
         }
